@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { quoteSchema } from "@/lib/validators"
 import { calculateEstimate } from "@/lib/quote-calculator"
+import { sendOwnerNotification, sendClientConfirmation } from "@/lib/email"
+import { appendQuoteToSheet } from "@/lib/sheets"
 import { ZodError } from "zod"
 
 export async function POST(req: NextRequest) {
@@ -44,6 +46,33 @@ export async function POST(req: NextRequest) {
           estimatedMax: estimate.max,
         },
         include: { client: true },
+      })
+    })
+
+    const emailData = {
+      quoteId:       quote.id,
+      clientName:    quote.client.name,
+      clientEmail:   quote.client.email,
+      clientPhone:   quote.client.phone,
+      clientCompany: quote.client.company,
+      projectType:   quote.projectType,
+      location:      quote.location,
+      area:          quote.area,
+      description:   quote.description,
+      budget:        quote.budget,
+      estimatedMin:  quote.estimatedMin,
+      estimatedMax:  quote.estimatedMax,
+    }
+
+    // Fire-and-forget: don't block the response
+    Promise.allSettled([
+      sendOwnerNotification(emailData),
+      sendClientConfirmation(emailData),
+      appendQuoteToSheet({ ...emailData, createdAt: quote.createdAt }),
+    ]).then(results => {
+      results.forEach((r, i) => {
+        if (r.status === "rejected")
+          console.error(`[POST /api/quotes] side-effect ${i} failed:`, r.reason)
       })
     })
 
