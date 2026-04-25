@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useState, useEffect } from "react"
 import { translations, type Lang, type Translations } from "@/lib/i18n"
 
 interface LangContextValue {
@@ -13,7 +13,17 @@ const LangContext = createContext<LangContextValue | null>(null)
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState<Lang>("es")
-  const toggle = () => setLang(l => l === "es" ? "en" : "es")
+
+  useEffect(() => {
+    const saved = localStorage.getItem("lang") as Lang | null
+    if (saved === "en" || saved === "es") setLang(saved)
+  }, [])
+
+  const toggle = () => setLang(l => {
+    const next = l === "es" ? "en" : "es"
+    localStorage.setItem("lang", next)
+    return next
+  })
 
   return (
     <LangContext.Provider value={{ lang, t: translations[lang], toggle }}>
