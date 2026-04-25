@@ -10,7 +10,9 @@
 - **Producto**: Plataforma web para empresa constructora
 - **Stack**: Next.js 16 (App Router) + Tailwind CSS + Shadcn/UI + Prisma + PostgreSQL + Railway
 - **Directorio**: `/Users/constanzaaraya/example001/blueprint/`
-- **Precio del servicio**: cotizaciones online + portafolio + panel de administración
+- **Cliente**: Ventura Construcciones — remodelaciones de casas en Columbus, Ohio
+- **Paleta**: ámbar (#f59e0b) + stone (gris cálido) + blanco
+- **Idioma del sitio**: Español
 
 ---
 
