@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { useForm, type Resolver } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { quoteSchema, type QuoteFormData } from "@/lib/validators"
@@ -28,6 +29,7 @@ export function QuoteForm() {
   const { t } = useLang()
   const q = t.quote
 
+  const router = useRouter()
   const [step, setStep] = useState(0)
   const [submitted, setSubmitted] = useState(false)
   const [serverError, setServerError] = useState<string | null>(null)
@@ -62,6 +64,7 @@ export function QuoteForm() {
       const body = await res.json()
       if (!res.ok) throw new Error(body.message ?? q.errorFallback)
       setSubmitted(true)
+      setTimeout(() => router.push("/"), 2500)
     } catch (err) {
       setServerError(err instanceof Error ? err.message : q.errorFallback)
     }
