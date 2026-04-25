@@ -10,10 +10,16 @@ export const quoteSchema = z.object({
     ["RESIDENTIAL", "COMMERCIAL", "INDUSTRIAL", "RENOVATION", "INFRASTRUCTURE"],
     { error: "Selecciona un tipo de proyecto" }
   ),
-  area:        z.coerce.number().positive("El área debe ser mayor a 0").max(100000).optional().or(z.literal("")),
+  area:        z.preprocess(
+    (v) => (v === "" || v == null ? undefined : Number(v)),
+    z.number().positive("El área debe ser mayor a 0").max(100000).optional()
+  ),
   location:    z.string().min(3, "Ingresa la ubicación del proyecto"),
   description: z.string().min(20, "Describe el proyecto con al menos 20 caracteres").max(1000),
-  budget:      z.coerce.number().positive().optional().or(z.literal("")),
+  budget:      z.preprocess(
+    (v) => (v === "" || v == null ? undefined : Number(v)),
+    z.number().positive().optional()
+  ),
   startDate:   z.string().optional(),
 }).refine(
   (data) => {
