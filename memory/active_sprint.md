@@ -28,7 +28,7 @@ Tener el schema de base de datos definido, migración inicial aplicada y conexi�
 | # | Fase | Estado |
 |---|------|--------|
 | 1 | Inicializar proyecto Next.js + dependencias | ✅ Completado 2026-04-25 |
-| 2 | Prisma + Schema DB + conexión PostgreSQL | 🔄 En progreso |
+| 2 | Prisma + Schema DB + conexión PostgreSQL | ✅ Completado 2026-04-25 |
 | 3 | lib/: Prisma singleton + Zod validators + quote-calculator | ⏳ Pendiente |
 | 4 | API Route POST /api/quotes con Integrity Validator | ⏳ Pendiente |
 | 5 | Componente QuoteForm multi-step | ⏳ Pendiente |

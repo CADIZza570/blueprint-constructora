@@ -75,4 +75,4 @@ PENDING | REVIEWED | SENT | ACCEPTED | REJECTED
 
 | # | Nombre | Fecha | Estado |
 |---|--------|-------|--------|
-| 001 | init | — | ⏳ Pendiente |
+| 001 | init | 2026-04-25 | ✅ Aplicada |
