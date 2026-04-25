@@ -56,6 +56,11 @@ export const translations = {
       rights:   "All rights reserved.",
       location: "Columbus, Ohio",
     },
+    quotePage: {
+      tag:      "Get a Quote",
+      title:    "Let's Talk About Your Project",
+      subtitle: "Fill out the form and we'll send you a free estimate — no commitment needed.",
+    },
     quote: {
       steps: ["Your Info", "The Project", "Confirm"],
       step1: {
@@ -168,6 +173,11 @@ export const translations = {
     footer: {
       rights:   "Todos los derechos reservados.",
       location: "Columbus, Ohio",
+    },
+    quotePage: {
+      tag:      "Cotización",
+      title:    "Hablemos de tu proyecto",
+      subtitle: "Completa el formulario y te enviamos un presupuesto estimado sin compromiso.",
     },
     quote: {
       steps: ["Tus datos", "El proyecto", "Confirmar"],
