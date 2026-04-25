@@ -70,9 +70,12 @@ export async function POST(req: NextRequest) {
       sendClientConfirmation(emailData),
       appendQuoteToSheet({ ...emailData, createdAt: quote.createdAt }),
     ]).then(results => {
+      const labels = ["owner-email", "client-email", "sheets"]
       results.forEach((r, i) => {
         if (r.status === "rejected")
-          console.error(`[POST /api/quotes] side-effect ${i} failed:`, r.reason)
+          console.error(`[quotes] ${labels[i]} FAILED:`, r.reason)
+        else
+          console.log(`[quotes] ${labels[i]} OK:`, JSON.stringify(r.value))
       })
     })
 
