@@ -1,22 +1,27 @@
 import { z } from "zod"
 
+const US_PHONE = /^\+1[\s.\-]?\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4}$/
+
 export const quoteSchema = z.object({
-  name:        z.string().min(2, "Nombre debe tener al menos 2 caracteres"),
-  email:       z.string().email("Email inválido"),
-  phone:       z.string().regex(/^\+?[\d\s\-() ]{7,15}$/, "Teléfono inválido").optional().or(z.literal("")),
+  name:        z.string().min(2, "Name must be at least 2 characters"),
+  email:       z.string().email("Invalid email address"),
+  phone:       z.string()
+    .regex(US_PHONE, "Enter a valid US number: +1 614 223 9039")
+    .optional()
+    .or(z.literal("")),
   company:     z.string().optional(),
 
   projectType: z.enum(
     ["RESIDENTIAL", "COMMERCIAL", "INDUSTRIAL", "RENOVATION", "INFRASTRUCTURE"],
-    { error: "Selecciona un tipo de proyecto" }
+    { error: "Select a project type" }
   ),
-  area:        z.preprocess(
+  area: z.preprocess(
     (v) => (v === "" || v == null ? undefined : Number(v)),
-    z.number().positive("El área debe ser mayor a 0").max(100000).optional()
+    z.number().positive("Area must be greater than 0").max(100000).optional()
   ),
-  location:    z.string().min(3, "Ingresa la ubicación del proyecto"),
-  description: z.string().min(20, "Describe el proyecto con al menos 20 caracteres").max(1000),
-  budget:      z.preprocess(
+  location:    z.string().min(3, "Enter the project location"),
+  description: z.string().min(20, "Describe the project in at least 20 characters").max(1000),
+  budget: z.preprocess(
     (v) => (v === "" || v == null ? undefined : Number(v)),
     z.number().positive().optional()
   ),
@@ -26,7 +31,7 @@ export const quoteSchema = z.object({
     if (["COMMERCIAL", "INDUSTRIAL"].includes(data.projectType) && !data.area) return false
     return true
   },
-  { message: "Proyectos comerciales e industriales requieren especificar el área", path: ["area"] }
+  { message: "Commercial and industrial projects require an area", path: ["area"] }
 )
 
 export type QuoteFormData = z.infer<typeof quoteSchema>
