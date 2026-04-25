@@ -1,7 +1,7 @@
 import { google } from "googleapis"
 
 const SHEET_ID = "1FnISr7wIvq_d7R0FshhMNSX4aYCPnfyRJUl2OvsPMas"
-const SHEET_NAME = "Cotizaciones"
+const SHEET_NAME = "Hoja 1"
 
 const PROJECT_LABELS: Record<string, string> = {
   RESIDENTIAL: "Residential",
